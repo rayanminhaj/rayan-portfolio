@@ -36,7 +36,7 @@ export default function RootLayout({
             <span className="text-sm text-gray-600">© 2025</span>
           </div>
 
-          <div className="flex items-center gap-6 text-lg">
+          <div className="flex flex-wrap justify-center items-center gap-4 text-base sm:gap-6 sm:text-lg text-center">
             <Link href="/" className="hover:text-green-700 transition text-black">
               Home
             </Link>

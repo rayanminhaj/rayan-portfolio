@@ -82,7 +82,7 @@ export default function WorkPage() {
       <div className="hidden md:block w-1/2 bg-[#e8ffe7]" />
 
       {/* FIXED PREVIEW — Bottom Right (Extended Upwards) */}
-      <div className="fixed bottom-10 right-10 w-[47%] h-[70vh] rounded-3xl overflow-hidden shadow-2xl border border-green-100 bg-white/50 backdrop-blur-md z-40">
+      <div className="hidden md:fixed bottom-10 right-10 md:w-[47%] md:h-[70vh] rounded-3xl overflow-hidden shadow-2xl border border-green-100 bg-white/50 backdrop-blur-md z-40">
         <AnimatePresence mode="wait">
           {projects.map(
             (proj) =>

@@ -54,11 +54,11 @@ export default function Page() {
       <Particles id="tsparticles" className="absolute inset-0 -z-10" options={options} />
       <FloatingIcons />
 
-      <section className="flex flex-col items-center justify-center text-center py-20 px-8">
+      <section className="flex flex-col items-center justify-center text-center py-16 px-6 sm:px-8 md:px-12">
         <motion.img
-          src="/me.jpg"
-          alt="Rayan Minhaj"
-          className="w-44 h-44 rounded-full shadow-lg border-2 border-white mb-6 object-cover"
+  src="/me.jpg"
+  alt="Rayan Minhaj"
+  className="w-32 h-32 sm:w-44 sm:h-44 rounded-full shadow-lg border-2 border-white mb-6 object-cover"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}

@@ -24,7 +24,7 @@ export default function ResumePage() {
         <iframe
           src="/resume.pdf"
           title="Rayan Minhaj Resume"
-          className="w-full h-[90vh] rounded-2xl"
+          className="w-full h-[75vh] sm:h-[90vh] rounded-2xl"
         ></iframe>
       </div>
 
