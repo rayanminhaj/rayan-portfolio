@@ -1,65 +1,116 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import React, { useEffect, useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { Cpu, Bot, Brain } from "lucide-react";
+import { Playfair_Display, Poppins } from "next/font/google";
+import Particles, { initParticlesEngine } from "@tsparticles/react";
+import { loadAll } from "@tsparticles/all";
+
+// ======= FONTS =======
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["600", "700", "800", "900"],
+  variable: "--font-playfair",
+});
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-poppins",
+});
+
+export default function Page() {
+  const [engineReady, setEngineReady] = useState(false);
+
+  useEffect(() => {
+    initParticlesEngine(async (engine) => {
+      await loadAll(engine); // load everything (all presets)
+    }).then(() => setEngineReady(true));
+  }, []);
+
+  const options = useMemo(
+    () => ({
+      fpsLimit: 60,
+      background: { color: { value: "#00000000" } },
+      particles: {
+        number: { value: 45 },
+        color: { value: "#4ade80" },
+        links: { enable: true, color: "#4ade80", opacity: 0.25 },
+        move: { enable: true, speed: 0.4 },
+        opacity: { value: 0.25 },
+        size: { value: { min: 1, max: 3 } },
+      },
+      detectRetina: true,
+    }),
+    []
+  );
+
+  if (!engineReady) return null; // waits for animation engine
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <main
+      className={`${playfair.variable} ${poppins.variable} scroll-smooth min-h-screen relative bg-gradient-to-b from-[#d9f8d6] via-[#e8ffe7] to-[#f4fff3] text-neutral-900 overflow-hidden`}
+    >
+      <Particles id="tsparticles" className="absolute inset-0 -z-10" options={options} />
+      <FloatingIcons />
+
+      <section className="flex flex-col items-center justify-center text-center py-20 px-8">
+        <motion.img
+          src="/me.jpg"
+          alt="Rayan Minhaj"
+          className="w-44 h-44 rounded-full shadow-lg border-2 border-white mb-6 object-cover"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+        <h1 className="text-6xl font-serif font-bold mb-4">Hey, I'm Rayan Minhaj</h1>
+        <p className="text-lg max-w-2xl text-neutral-700">
+          I’m a Computer Science major at <b>Penn State</b>, passionate about{" "}
+          <b>AI, ML and intelligent systems</b>. I enjoy exploring how code can
+          make ideas come alive and building projects that blend creativity,
+          logic and purpose.
+        </p>
+      </section>
+    </main>
+  );
+}
+
+/* ============== FLOATING ICONS ============== */
+function FloatingIcons() {
+  const iconClass =
+    "absolute opacity-30 hover:opacity-60 transition drop-shadow-md";
+
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
+    >
+      <motion.div
+        className={`${iconClass} top-[12%] left-[-8%]`}
+        initial={{ x: "-10vw" }}
+        animate={{ x: "115vw" }}
+        transition={{ duration: 26, repeat: Infinity, ease: "linear" }}
+      >
+        <Cpu size={44} />
+      </motion.div>
+
+      <motion.div
+        className={`${iconClass} top-[38%] left-[-12%]`}
+        initial={{ x: "-15vw" }}
+        animate={{ x: "120vw" }}
+        transition={{ duration: 32, repeat: Infinity, ease: "linear" }}
+      >
+        <Bot size={48} />
+      </motion.div>
+
+      <motion.div
+        className={`${iconClass} top-[70%] left-[-10%]`}
+        initial={{ x: "-12vw" }}
+        animate={{ x: "118vw" }}
+        transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
+      >
+        <Brain size={46} />
+      </motion.div>
     </div>
   );
 }
